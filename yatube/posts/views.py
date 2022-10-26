@@ -4,7 +4,6 @@ from .models import Post, Group, User, Follow
 from .forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from utils.pagin import get_page_context
-from django.views.decorators.cache import cache_page
 from django.urls import reverse
 
 POSTS_PER_PAGE = 10
@@ -127,6 +126,7 @@ def add_comment(request, post_id):
     return render(request, 'posts/includes/comment.html', {
         'form': form, 'post': post})
 
+
 @login_required
 def follow_index(request):
     list_of_posts = Post.objects.filter(author__following__user=request.user)
@@ -136,6 +136,7 @@ def follow_index(request):
     context = {'page': page}
     return render(request, 'posts/follow.html', context)
 
+
 @login_required
 def profile_follow(request, username):
     user = request.user
@@ -144,6 +145,7 @@ def profile_follow(request, username):
     if user != author and not is_follower.exists():
         Follow.objects.create(user=user, author=author)
     return redirect(reverse('posts:profile', args=[username]))
+
 
 @login_required
 def profile_unfollow(request, username):
