@@ -127,7 +127,7 @@ class FollowTests(TestCase):
             author=self.user_following
         )
         response = self.client_authorized_follower.get('/follow/')
-        post_text_0 = response.context["page"][0].text
+        post_text_0 = response.context['page_obj'][0].text
         self.assertEqual(post_text_0, 'Текст поста')
         response = self.client_authorized_following.get('/follow/')
         self.assertNotContains(response, 'Текст поста')
