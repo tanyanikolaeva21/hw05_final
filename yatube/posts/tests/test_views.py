@@ -113,11 +113,11 @@ class FollowTests(TestCase):
     def test_unfollow(self):
         """Пост не появился в ленте у неподписанного пользователя"""
         self.client_authorized_follower.get(
-            reverse('posts:profile_follow', kwargs={'username':
-            self.user_following.username}))
+            reverse('posts:profile_follow', kwargs={
+                'username': self.user_following.username}))
         self.client_authorized_follower.get(
-            reverse('posts:profile_unfollow', kwargs={'username':
-            self.user_following.username}))
+            reverse('posts:profile_unfollow', kwargs={
+                'username': self.user_following.username}))
         self.assertEqual(Follow.objects.all().count(), 0)
 
     def test_subscription_feed(self):
