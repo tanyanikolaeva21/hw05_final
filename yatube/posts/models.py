@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
-
 User = get_user_model()
 
 
@@ -26,11 +25,11 @@ class Post(models.Model):
     )
     image = models.ImageField(
         'Картинка',
-        upload_to= 'posts/',
-        blank= True,
-        null= True
+        upload_to='posts/',
+        blank=True,
+        null=True
     )
-    author= models.ForeignKey(
+    author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='posts'
@@ -42,22 +41,24 @@ class Post(models.Model):
     def __str__(self) -> str:
         return self.text[:15]
 
+
 class Comment(models.Model):
-    post= models.ForeignKey(
+    post = models.ForeignKey(
         Post,
         on_delete=models.CASCADE,
         related_name='comments'
     )
-    author= models.ForeignKey(
+    author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='comments'
     )
-    text= models.TextField()
-    created= models.DateTimeField('date published', auto_now_add=True)
+    text = models.TextField()
+    created = models.DateTimeField('date published', auto_now_add=True)
 
     def __str__(self):
         return self.text
+
 
 class Follow(models.Model):
     user = models.ForeignKey(

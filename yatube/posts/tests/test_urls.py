@@ -71,4 +71,3 @@ class PostURLTests(TestCase):
     def test_page_404(self):
         response = self.guest_client.get('/unexisting_page/')
         self.assertEqual(response.status_code, HTTPStatus.NOT_FOUND)
-
