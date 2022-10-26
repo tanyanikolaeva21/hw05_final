@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% load static %}
+<html lang="ru">
+{% block title %} {{ post_info.text|truncatechars:30 }} {% endblock %}
+{% block content %}
+<div class="container py-5">
+  <div class="row">
+    <aside class="col-12 col-md-3">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+                Дата публикации: {{ post_info.pub_date|date:"d E Y" }}
+              </li>               
+              <li class="list-group-item">
+                Группа: {{ post_info.group }}</p>
+              <p>{% if post_info.group %}
+                <a href="{% url 'posts:group_posts' post_info.group.slug %}">все записи группы</a>
+              {% endif %}</a>
+            </li>
+            <li class="list-group-item">
+              Автор: {{ post_info.author }}</li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+              Всего постов автора:  <span >{{ authors_post }}</li>
+                <li class="list-group-item">
+                <a href="{% url 'posts:profile' post_info.author %}">все посты пользователя</a>
+              </li>
+            </ul>
+          </aside>
+          <article class="col-12 col-md-9">
+          {% thumbnail post_info.image "960x339" crop="center" upscale=True as im %}
+                        <img class="card-img my-2" src="{{ im.url }}">
+                      {% endthumbnail %}
+                    <p>{{ post_info.text }}</p>
+                      {% if post_info.author == request.user %}
+                        <a href="{% url 'posts:post_edit' post_info.id %}"> Редактировать запись </a>
+                      {% endif %}
+                      
+                      {% include 'posts/includes/comment.html' %}
+                      </article>
+                </div>
+{% endblock %}
