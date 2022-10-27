@@ -70,7 +70,7 @@ class PostURLTests(TestCase):
 
     def test_page_404(self):
         response = self.guest_client.get('/unexisting_page/')
-        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertEqual(response.status_code, HTTPStatus.NOT_FOUND)
 
     def test_about_url_uses_correct_template(self):
         """Проверка шаблона для адреса /unexisting_page/."""
