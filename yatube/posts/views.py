@@ -7,7 +7,7 @@ from utils.pagin import get_page_context
 from django.urls import reverse
 
 POSTS_PER_PAGE = 10
-POSTS_ON_LIST= 20
+POSTS_ON_LIST = 20
 
 
 def index(request):
