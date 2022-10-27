@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from http.client import NOT_FOUND
+from http.client import HTTPStatus
 from django.test import TestCase
 
 
