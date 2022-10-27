@@ -7,6 +7,7 @@ from utils.pagin import get_page_context
 from django.urls import reverse
 
 POSTS_PER_PAGE = 10
+POSTS_ON_LIST= 20
 
 
 def index(request):
@@ -130,7 +131,7 @@ def add_comment(request, post_id):
 @login_required
 def follow_index(request):
     list_of_posts = Post.objects.filter(author__following__user=request.user)
-    paginator = Paginator(list_of_posts, 20)
+    paginator = Paginator(list_of_posts, POSTS_ON_LIST)
     page_namber = request.GET.get('page_obj')
     page = paginator.get_page(page_namber)
     context = {'page_obj': page}
@@ -140,8 +141,8 @@ def follow_index(request):
 @login_required
 def profile_follow(request, username):
     user = request.user
-    author = User.objects.get(username=username)
-    is_follower = Follow.objects.filter(user=user, author=author)
+    author = get_object_or_404(User, username=username)
+    is_follower = Follow.objects.get_or_create(user=user, author=author)
     if user != author and not is_follower.exists():
         Follow.objects.create(user=user, author=author)
     return redirect(reverse('posts:profile', args=[username]))
