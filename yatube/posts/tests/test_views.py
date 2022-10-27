@@ -99,7 +99,7 @@ class FollowTests(TestCase):
                                                        password='pass')
         self.post = Post.objects.create(
             author=self.user_following,
-            text='Текст поста'
+            text='Тестовый пост'
         )
         self.client_authorized_follower.force_login(self.user_follower)
         self.client_authorized_following.force_login(self.user_following)
@@ -107,7 +107,7 @@ class FollowTests(TestCase):
     def test_follow(self):
         self.client_authorized_follower.get(
             reverse('posts:profile_follow', kwargs={
-                'username': self.user_following.username}))
+                'username' : self.user_following.username}))
         self.assertEqual(Follow.objects.all().count(), 1)
 
     def test_unfollow(self):
@@ -129,7 +129,4 @@ class FollowTests(TestCase):
         response = self.client_authorized_follower.get(
             reverse('posts:follow_index'))
         post_text_0 = response.context['page_obj'][0].text
-        self.assertEqual(post_text_0, 'Текст поста')
-        response = self.client_authorized_following.get(
-            reverse('posts:follow_index'))
-        self.assertNotContains(response, 'Текст поста')
+        self.assertEqual(post_text_0, 'Тестовый пост')
